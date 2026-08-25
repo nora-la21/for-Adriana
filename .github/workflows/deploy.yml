@@ -37,9 +37,8 @@ jobs:
       - run: npm ci
 
       - name: Build
-        # Pages serves the site from /<repo>/, so asset URLs need that prefix.
-        env:
-          APP_BASE: /${{ github.event.repository.name }}/
+        # No APP_BASE: the default relative base resolves against whatever
+        # path Pages serves from, including the lowercased repo segment.
         run: npm run build
 
       - name: Bundle single-file prototype
