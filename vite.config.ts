@@ -1,18 +1,27 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// Relative base, deliberately.
+// The app source lives in app/, not at the repo root.
 //
-// An absolute base bakes the deploy path into every asset URL, and GitHub
-// Pages serves the repo segment lowercased — so a build pinned to
-// "/for-Adriana/" 404s its own JS at "/for-adriana/" and renders a white
-// screen. "./" resolves against wherever the page actually is: Pages under
-// any casing, a project subfolder, a custom domain root, or a file:// open.
-//
-// This is only safe because routing is hash-based (see App.tsx); path-based
-// routing would need a real base.
+// GitHub Pages on this repo is configured as "deploy from a branch", which
+// serves the repository root. That root therefore has to BE the published
+// site — a generated, self-contained index.html (see scripts/bundle-single.mjs).
+// Keeping Vite's source template at the root would collide with it, and did:
+// Pages served the template, the browser was handed /src/main.tsx as raw TSX,
+// and the page rendered white.
 export default defineConfig({
+  root: 'app',
+
+  // Relative, so assets resolve wherever the site is served from — Pages under
+  // any path casing, a subfolder, a custom domain, or a file:// open. Safe
+  // because routing is hash-based (see app/src/App.tsx).
   base: process.env.APP_BASE ?? './',
+
+  publicDir: 'public',
   plugins: [react()],
+  build: {
+    outDir: '../dist',
+    emptyOutDir: true,
+  },
   server: { host: true, port: 5173 },
 })

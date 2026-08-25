@@ -14,9 +14,16 @@ Built from the deep-eggplant-and-gold mockup: *Devotional Flow* hero, journeys r
 
 > A Pages site is publicly reachable by anyone with the link, even while the repo
 > itself is private. Worth knowing before the link goes out.
->
-> If the deploy ever fails at the `configure-pages` step, Pages has been switched
-> off: repo → **Settings** → **Pages** → **Source: GitHub Actions**.
+
+**Why the root `index.html` is a committed build artifact.** Pages on this repo is
+configured as *deploy from a branch*, which serves the repository root through
+Jekyll — it does not run a build. So the root has to already **be** the site.
+`npm run bundle` regenerates it, inlining the whole app into that one file.
+
+That means **`index.html` at the root is generated — never edit it by hand.** Edit
+the source under `app/`, then run `npm run bundle` and commit the result. The Vite
+source template lives at `app/index.html` precisely so it cannot collide with the
+published root file.
 
 **Without Pages.** [`prototype/body-temple-prototype.html`](prototype/body-temple-prototype.html) is the whole app inlined into one file. Download it and double-click — no server, no build, no internet needed (it falls back to system fonts offline). Useful as a backup during a call.
 
@@ -60,7 +67,7 @@ On a desktop browser the app renders inside a phone frame with presenter notes b
 
 ## Two decisions worth naming
 
-**The moon drives the content, not a release calendar.** `src/lib/moon.ts` computes the phase, and today's practice is selected from it. This is the thing a Calm-style app structurally cannot copy — its content ships on a publishing schedule. Here the app is different in week three than in week one because the sky is.
+**The moon drives the content, not a release calendar.** `app/src/lib/moon.ts` computes the phase, and today's practice is selected from it. This is the thing a Calm-style app structurally cannot copy — its content ships on a publishing schedule. Here the app is different in week three than in week one because the sky is.
 
 **The daily practice is always free.** The hook is the habit; the depth is what gets charged for. Free tier also gets the first three sessions of any journey. Everything past that is gated.
 
@@ -68,9 +75,9 @@ On a desktop browser the app renders inside a phone frame with presenter notes b
 
 ## What's real and what isn't
 
-**Real** — Body Temple's programme names, the $44/mo and $25/mo price points and their six-month terms, the membership inclusions ("live, recorded, and yours to keep", 50% off online retreats), Adriana's bio, and the outbound links. Taken from Body Temple's public material and gathered in `src/data/brand.ts` and `src/data/tiers.ts`.
+**Real** — Body Temple's programme names, the $44/mo and $25/mo price points and their six-month terms, the membership inclusions ("live, recorded, and yours to keep", 50% off online retreats), Adriana's bio, and the outbound links. Taken from Body Temple's public material and gathered in `app/src/data/brand.ts` and `app/src/data/tiers.ts`.
 
-**Placeholder** — every practice cue, session title and duration. They are written in Body Temple's register to show the structure and pacing, **not** transcribed from Adriana's teaching. Her recordings and her curriculum replace them wholesale. Nothing in `src/data/practices.ts` or the session lists in `src/data/journeys.ts` should be shown as her words.
+**Placeholder** — every practice cue, session title and duration. They are written in Body Temple's register to show the structure and pacing, **not** transcribed from Adriana's teaching. Her recordings and her curriculum replace them wholesale. Nothing in `app/src/data/practices.ts` or the session lists in `app/src/data/journeys.ts` should be shown as her words.
 
 **Not built** — accounts, payments, real audio/video, push notifications, offline downloads, native shells. See below.
 
@@ -79,7 +86,7 @@ On a desktop browser the app renders inside a phone frame with presenter notes b
 ## How it's put together
 
 ```
-src/
+app/src/
   data/        brand, practices, journeys, gatherings, tiers   ← all copy lives here
   lib/
     moon.ts    lunar phase engine
@@ -91,7 +98,7 @@ src/
 
 No backend, no accounts, no analytics, nothing leaves the device — practice state is `localStorage` under one key. "Reset the demo" on the Altar screen clears it.
 
-`src/lib/store.ts` is deliberately written as the shape a real API would return, so going live means swapping `load`/`save` for fetches rather than rewriting the screens. Likewise the player runs on a timer that maps onto an `<audio>` element's `currentTime`.
+`app/src/lib/store.ts` is deliberately written as the shape a real API would return, so going live means swapping `load`/`save` for fetches rather than rewriting the screens. Likewise the player runs on a timer that maps onto an `<audio>` element's `currentTime`.
 
 ---
 

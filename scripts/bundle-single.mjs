@@ -36,9 +36,16 @@ const js = await readFile(join(assetDir, jsFile), 'utf8')
 // A literal </script> inside the bundle would close the tag early.
 const safeJs = js.replaceAll('</script', '<\\/script')
 
-const html = `<title>body temple</title>
+const html = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>body temple</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#1B0C18" />
+<meta name="description" content="Body Temple with Adriana Rizzolo — a daily sacred practice app. Devotional movement, breath, and ritual, honouring the cycle." />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
@@ -46,22 +53,30 @@ const html = `<title>body temple</title>
   rel="stylesheet"
 />
 <style>
-/* The host skeleton owns <html>/<body>, so re-assert full height and the
-   ground colour here rather than relying on the page around us. */
 html, body { height: 100%; margin: 0; background: #150A13; }
 ${css}
 </style>
+</head>
+<body>
 <div id="root"></div>
 <script type="module">
 ${safeJs}
 </script>
+</body>
+</html>
 `
 
-// Written to dist/ (so GitHub Pages serves it) and to prototype/ (so it is
-// committed, and can be downloaded and opened offline without Pages set up).
+// Three destinations, all the same bytes:
+//
+//   index.html                             the repo root IS the published site,
+//                                          because Pages deploys from the branch
+//                                          root. This file is committed.
+//   prototype/body-temple-prototype.html   downloadable, opens offline from disk.
+//   dist/body-temple-prototype.html        alongside the normal multi-file build.
 const targets = [
-  join(root, 'dist', 'body-temple-prototype.html'),
+  join(root, 'index.html'),
   join(root, 'prototype', 'body-temple-prototype.html'),
+  join(root, 'dist', 'body-temple-prototype.html'),
 ]
 
 await mkdir(join(root, 'prototype'), { recursive: true })
