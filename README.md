@@ -8,16 +8,15 @@ Built from the deep-eggplant-and-gold mockup: *Devotional Flow* hero, journeys r
 
 ## Seeing it
 
-**On the web (for screen sharing).** The repo deploys to GitHub Pages on every push to `claude/body-temple-app-mvp-fttuk0`:
+**On the web (for screen sharing).** Live here, redeployed on every push to `claude/body-temple-app-mvp-fttuk0`:
 
-```
-https://nora-la21.github.io/for-adriana/
-```
+### → https://nora-la21.github.io/for-Adriana/
 
-> **One-time setup:** GitHub Pages has to be switched on before that URL exists.
-> Repo → **Settings** → **Pages** → **Source: GitHub Actions**. The deploy workflow
-> then runs on its own. Note that a Pages site is publicly reachable by anyone with
-> the link, even when the repo itself is private.
+> A Pages site is publicly reachable by anyone with the link, even while the repo
+> itself is private. Worth knowing before the link goes out.
+>
+> If the deploy ever fails at the `configure-pages` step, Pages has been switched
+> off: repo → **Settings** → **Pages** → **Source: GitHub Actions**.
 
 **Without Pages.** [`prototype/body-temple-prototype.html`](prototype/body-temple-prototype.html) is the whole app inlined into one file. Download it and double-click — no server, no build, no internet needed (it falls back to system fonts offline). Useful as a backup during a call.
 
