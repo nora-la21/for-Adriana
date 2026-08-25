@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="ground" cx="50%" cy="34%" r="78%">
+      <stop offset="0%" stop-color="#4C2342"/>
+      <stop offset="60%" stop-color="#24101F"/>
+      <stop offset="100%" stop-color="#150A13"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E0C089"/>
+      <stop offset="60%" stop-color="#C9A05C"/>
+      <stop offset="100%" stop-color="#9C7A45"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" fill="url(#ground)"/>
+
+  <!-- the moon, waxing -->
+  <circle cx="256" cy="196" r="74" fill="none" stroke="url(#gold)" stroke-width="3" opacity="0.55"/>
+  <path d="M256 122a74 74 0 0 1 0 148 96 96 0 0 0 0-148z" fill="url(#gold)"/>
+
+  <!-- the temple: a body as an arch -->
+  <path d="M158 386c0-54 44-98 98-98s98 44 98 98" fill="none" stroke="url(#gold)" stroke-width="10" stroke-linecap="round"/>
+  <line x1="158" y1="386" x2="158" y2="418" stroke="url(#gold)" stroke-width="10" stroke-linecap="round"/>
+  <line x1="354" y1="386" x2="354" y2="418" stroke="url(#gold)" stroke-width="10" stroke-linecap="round"/>
+  <line x1="132" y1="418" x2="380" y2="418" stroke="url(#gold)" stroke-width="10" stroke-linecap="round"/>
+</svg>

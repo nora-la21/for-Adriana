@@ -1,0 +1,1132 @@
+/* ============================================================
+   Body Temple — application styles
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bt-ink);
+  color: var(--bt-cream);
+  font-family: var(--bt-ui);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--bt-gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ------------------------------------------------------------
+   Device shell
+   On a phone the app is full-bleed. On a desktop it renders
+   inside a handset so the demo reads the way the mockup does.
+   ------------------------------------------------------------ */
+
+.shell {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: var(--bt-ink);
+}
+
+.shell__device {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bt-ground);
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 720px) {
+  .shell {
+    background:
+      radial-gradient(120% 90% at 50% 0%, #2A1226 0%, #120810 62%, #0B050A 100%);
+    padding: 32px 16px;
+  }
+
+  .shell__device {
+    width: 390px;
+    height: min(844px, calc(100vh - 64px));
+    border-radius: 46px;
+    border: 1px solid rgba(244, 231, 214, 0.14);
+    box-shadow:
+      0 0 0 10px #1A0E17,
+      0 0 0 11px rgba(201, 160, 92, 0.22),
+      0 40px 90px rgba(0, 0, 0, 0.7);
+  }
+
+  /* notch */
+  .shell__device::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 116px;
+    height: 30px;
+    border-radius: var(--bt-r-pill);
+    background: #100710;
+    z-index: 60;
+  }
+}
+
+/* ------------------------------------------------------------
+   Presentation panel
+   Shown beside the handset on a wide screen, so the prototype
+   reads as something being presented rather than a floating
+   phone. Never rendered on an actual device.
+   ------------------------------------------------------------ */
+
+.stage-note {
+  display: none;
+}
+
+@media (min-width: 1040px) {
+  .shell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 68px;
+  }
+
+  .stage-note {
+    display: block;
+    width: min(400px, 34vw);
+  }
+
+  .stage-note__title {
+    margin-top: 12px;
+    font-family: var(--bt-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 52px;
+    line-height: 1;
+    color: var(--bt-cream);
+  }
+
+  .stage-note__body {
+    margin-top: 20px;
+    font-size: 15.5px;
+    line-height: 1.72;
+    color: var(--bt-cream-soft);
+  }
+
+  .stage-note__fine {
+    margin-top: 26px;
+    padding-top: 18px;
+    border-top: 1px solid var(--bt-veil);
+    font-size: 12.5px;
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+    color: var(--bt-cream-dim);
+  }
+}
+
+/* Faux status bar — only on the desktop handset presentation */
+.statusbar {
+  display: none;
+}
+
+@media (min-width: 720px) {
+  .statusbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px var(--bt-pad) 2px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--bt-cream);
+    flex: none;
+    z-index: 61;
+  }
+  .statusbar__glyphs {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .statusbar__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--bt-gold);
+  }
+  .statusbar__bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 11px;
+    margin-left: 3px;
+  }
+  .statusbar__bars i {
+    width: 3px;
+    background: var(--bt-gold);
+    border-radius: 1px;
+  }
+}
+
+/* ------------------------------------------------------------
+   Scroll region
+   ------------------------------------------------------------ */
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll__inner {
+  padding: 0 var(--bt-pad) calc(var(--bt-nav-h) + 40px);
+}
+
+.page-enter {
+  animation: rise 0.42s var(--bt-ease) both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ------------------------------------------------------------
+   Type primitives
+   ------------------------------------------------------------ */
+
+.wordmark {
+  font-family: var(--bt-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--bt-cream);
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+  color: var(--bt-gold);
+}
+
+.eyebrow--dim {
+  color: var(--bt-cream-dim);
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+  color: var(--bt-gold);
+  margin: 30px 0 12px;
+}
+
+.serif {
+  font-family: var(--bt-display);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.meta {
+  font-size: 13.5px;
+  color: var(--bt-cream-dim);
+  letter-spacing: 0.01em;
+}
+
+.dotsep::before {
+  content: '·';
+  margin: 0 7px;
+  opacity: 0.55;
+}
+
+/* ------------------------------------------------------------
+   Header
+   ------------------------------------------------------------ */
+
+.header {
+  padding: 14px var(--bt-pad) 4px;
+  flex: none;
+}
+
+.header__sub {
+  margin-top: 7px;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--bt-gold);
+  line-height: 1.6;
+  max-width: 260px;
+}
+
+.header__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* ------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px 24px;
+  border-radius: var(--bt-r-pill);
+  font-family: var(--bt-display);
+  font-style: italic;
+  font-size: 16px;
+  letter-spacing: 0.005em;
+  transition: transform 0.18s var(--bt-ease), box-shadow 0.18s var(--bt-ease),
+    background 0.18s var(--bt-ease);
+}
+
+.btn:active {
+  transform: scale(0.975);
+}
+
+.btn--gold {
+  background: linear-gradient(168deg, var(--bt-gold-bright), var(--bt-gold) 58%, #B08B4C);
+  color: #2A1424;
+  font-weight: 500;
+  box-shadow: 0 6px 20px rgba(201, 160, 92, 0.26);
+}
+
+.btn--ghost {
+  border: 1px solid var(--bt-veil-strong);
+  color: var(--bt-cream);
+  background: rgba(244, 231, 214, 0.03);
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ------------------------------------------------------------
+   Hero — today's sacred practice
+   ------------------------------------------------------------ */
+
+.hero {
+  position: relative;
+  margin-top: 18px;
+  padding: 22px 22px 24px;
+  border-radius: var(--bt-r-lg);
+  border: 1px solid rgba(201, 160, 92, 0.28);
+  background:
+    radial-gradient(80% 120% at 88% 6%, rgba(201, 160, 92, 0.20) 0%, rgba(201, 160, 92, 0) 58%),
+    linear-gradient(158deg, #4C2342 0%, #3A1832 55%, #2E1329 100%);
+  box-shadow: var(--bt-shadow);
+  overflow: hidden;
+  text-align: left;
+  display: block;
+  width: 100%;
+}
+
+/* the moon that sits behind the corner of the card */
+.hero__orb {
+  position: absolute;
+  top: -34px;
+  right: -30px;
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, rgba(244, 231, 214, 0.18), rgba(201, 160, 92, 0.05) 60%, transparent 72%);
+  pointer-events: none;
+}
+
+.hero__title {
+  margin-top: 12px;
+  font-family: var(--bt-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.16;
+  color: var(--bt-cream);
+  letter-spacing: -0.005em;
+}
+
+.hero__meta {
+  margin-top: 12px;
+  font-size: 14.5px;
+  color: var(--bt-cream-soft);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.hero__cta {
+  margin-top: 20px;
+}
+
+.hero__teacher {
+  margin-top: 16px;
+  font-size: 12.5px;
+  color: var(--bt-cream-dim);
+  line-height: 1.55;
+}
+
+/* ------------------------------------------------------------
+   Cards / rows
+   ------------------------------------------------------------ */
+
+.card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 16px 18px;
+  border-radius: var(--bt-r);
+  background: var(--bt-surface);
+  border: 1px solid var(--bt-veil);
+  transition: background 0.2s var(--bt-ease), transform 0.18s var(--bt-ease),
+    border-color 0.2s var(--bt-ease);
+}
+
+.card:active {
+  transform: scale(0.988);
+  background: var(--bt-surface-2);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.row__body {
+  min-width: 0;
+  flex: 1;
+}
+
+.row__title {
+  font-family: var(--bt-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 19.5px;
+  line-height: 1.28;
+  color: var(--bt-cream);
+}
+
+.row__meta {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--bt-gold-dim);
+  letter-spacing: 0.012em;
+}
+
+.row__chev {
+  flex: none;
+  color: var(--bt-gold);
+  font-size: 16px;
+  opacity: 0.85;
+}
+
+/* thin progress hairline under a journey row */
+.progress {
+  margin-top: 12px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(244, 231, 214, 0.09);
+  overflow: hidden;
+}
+
+.progress__fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--bt-gold-dim), var(--bt-gold-bright));
+  transition: width 0.5s var(--bt-ease);
+}
+
+.locked {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--bt-gold);
+  border: 1px solid rgba(201, 160, 92, 0.34);
+  border-radius: var(--bt-r-pill);
+  padding: 3px 9px;
+  background: var(--bt-gold-wash);
+}
+
+/* ------------------------------------------------------------
+   Gathering tile — live community
+   ------------------------------------------------------------ */
+
+.gathering {
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin-top: 11px;
+  padding: 17px 18px;
+  border-radius: var(--bt-r);
+  border: 1px solid rgba(224, 115, 106, 0.3);
+  background: linear-gradient(140deg, #46203C 0%, #35172E 100%);
+  overflow: hidden;
+}
+
+.gathering__title {
+  font-family: var(--bt-ui);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.005em;
+  color: var(--bt-cream);
+}
+
+.gathering__meta {
+  margin-top: 5px;
+  font-size: 13px;
+  color: var(--bt-cream-dim);
+}
+
+.pulse {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bt-live);
+}
+
+.pulse__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--bt-live);
+  box-shadow: 0 0 0 0 rgba(224, 115, 106, 0.6);
+  animation: pulse 2.1s infinite;
+}
+
+@keyframes pulse {
+  70% {
+    box-shadow: 0 0 0 9px rgba(224, 115, 106, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(224, 115, 106, 0);
+  }
+}
+
+/* ------------------------------------------------------------
+   Bottom navigation
+   ------------------------------------------------------------ */
+
+.nav {
+  flex: none;
+  height: calc(var(--bt-nav-h) + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  border-top: 1px solid var(--bt-veil);
+  background: rgba(21, 10, 19, 0.9);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  position: relative;
+  z-index: 40;
+}
+
+.nav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 100%;
+  color: var(--bt-cream-dim);
+  transition: color 0.2s var(--bt-ease);
+}
+
+.nav__item--on {
+  color: var(--bt-gold);
+}
+
+.nav__glyph {
+  width: 21px;
+  height: 21px;
+  display: grid;
+  place-items: center;
+}
+
+.nav__text {
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------
+   Moon rail
+   ------------------------------------------------------------ */
+
+.moondial {
+  margin: 22px auto 0;
+  width: 168px;
+  height: 168px;
+  border-radius: 50%;
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 45%, #2E1429, #1E0D1A 72%);
+  border: 1px solid var(--bt-veil);
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.5);
+}
+
+.moondial__disc {
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  background: #241021;
+  box-shadow: 0 0 34px rgba(196, 200, 224, 0.14);
+}
+
+/* lit portion of the moon, driven by --lit (0..1) and --dir */
+.moondial__lit {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 34%, #F2EFF8, #C4C8E0 58%, #9AA0BC 100%);
+  clip-path: inset(0 calc((1 - var(--lit, 0.5)) * 100%) 0 0);
+}
+
+.moondial__lit--waning {
+  clip-path: inset(0 0 0 calc((1 - var(--lit, 0.5)) * 100%));
+}
+
+.moondial__shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: inset -8px -6px 26px rgba(20, 8, 18, 0.7);
+}
+
+.moonphase-name {
+  margin-top: 18px;
+  text-align: center;
+  font-family: var(--bt-display);
+  font-style: italic;
+  font-size: 25px;
+  color: var(--bt-cream);
+}
+
+.moonphase-sub {
+  margin-top: 7px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--bt-moon-dim);
+  letter-spacing: 0.03em;
+}
+
+.cycle-strip {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+  margin-top: 26px;
+}
+
+.cycle-strip__cell {
+  padding: 10px 2px 9px;
+  border-radius: var(--bt-r-sm);
+  border: 1px solid transparent;
+  text-align: center;
+  transition: background 0.2s var(--bt-ease), border-color 0.2s var(--bt-ease);
+}
+
+.cycle-strip__cell--on {
+  background: rgba(196, 200, 224, 0.09);
+  border-color: rgba(196, 200, 224, 0.28);
+}
+
+.cycle-strip__glyph {
+  font-size: 15px;
+  line-height: 1;
+  filter: saturate(0.7);
+}
+
+.cycle-strip__n {
+  margin-top: 6px;
+  font-size: 8.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bt-cream-dim);
+}
+
+/* ------------------------------------------------------------
+   Practice player
+   ------------------------------------------------------------ */
+
+.player {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(90% 60% at 50% 12%, #46203E 0%, #24101F 55%, #150A13 100%);
+  animation: rise 0.36s var(--bt-ease) both;
+}
+
+@media (min-width: 720px) {
+  .player {
+    position: absolute;
+    border-radius: 46px;
+  }
+}
+
+.player__bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px var(--bt-pad) 6px;
+}
+
+.player__close {
+  font-size: 22px;
+  line-height: 1;
+  color: var(--bt-cream-dim);
+  padding: 6px;
+}
+
+.player__body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 28px;
+  text-align: center;
+}
+
+.player__stage {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bt-gold);
+}
+
+.player__cue {
+  margin-top: 16px;
+  font-family: var(--bt-display);
+  font-style: italic;
+  font-size: 27px;
+  line-height: 1.34;
+  color: var(--bt-cream);
+  min-height: 2.7em;
+}
+
+/* the breath ring — expands and contracts with the guided breath */
+.breath {
+  margin: 34px 0 8px;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(201, 160, 92, 0.3);
+  background: radial-gradient(circle at 50% 50%, rgba(201, 160, 92, 0.16), transparent 68%);
+  animation: breathe 11s var(--bt-ease) infinite;
+}
+
+.breath__core {
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 34%, rgba(224, 192, 137, 0.5), rgba(201, 160, 92, 0.12) 62%, transparent 74%);
+}
+
+.breath--paused {
+  animation-play-state: paused;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(0.78);
+    opacity: 0.72;
+  }
+  45% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  55% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.player__foot {
+  flex: none;
+  padding: 0 var(--bt-pad) calc(28px + env(safe-area-inset-bottom, 0px));
+}
+
+.player__time {
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0.09em;
+  color: var(--bt-cream-dim);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 14px;
+}
+
+.player__track {
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(244, 231, 214, 0.1);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.player__controls {
+  display: flex;
+  gap: 11px;
+}
+
+/* completion */
+.complete {
+  text-align: center;
+}
+
+.complete__mark {
+  margin: 0 auto 22px;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(201, 160, 92, 0.42);
+  background: var(--bt-gold-wash);
+  font-size: 30px;
+  animation: rise 0.5s var(--bt-ease) both;
+}
+
+/* ------------------------------------------------------------
+   Altar (profile) — streak + devotion log
+   ------------------------------------------------------------ */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.stat {
+  padding: 16px 10px;
+  border-radius: var(--bt-r);
+  background: var(--bt-surface);
+  border: 1px solid var(--bt-veil);
+  text-align: center;
+}
+
+.stat__n {
+  font-family: var(--bt-display);
+  font-size: 27px;
+  color: var(--bt-gold-bright);
+  line-height: 1;
+}
+
+.stat__k {
+  margin-top: 8px;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--bt-cream-dim);
+}
+
+.streak {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.streak__d {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  border: 1px solid var(--bt-veil);
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  color: var(--bt-cream-dim);
+}
+
+.streak__d--on {
+  background: linear-gradient(150deg, rgba(224, 192, 137, 0.9), rgba(201, 160, 92, 0.55));
+  border-color: transparent;
+  color: #2A1424;
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------
+   Membership / paywall
+   ------------------------------------------------------------ */
+
+.tier {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 18px;
+  border-radius: var(--bt-r);
+  border: 1px solid var(--bt-veil);
+  background: var(--bt-surface);
+  transition: border-color 0.2s var(--bt-ease), background 0.2s var(--bt-ease);
+}
+
+.tier--on {
+  border-color: rgba(201, 160, 92, 0.6);
+  background: linear-gradient(150deg, #43203A, #33162D);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.34);
+}
+
+.tier__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tier__name {
+  font-family: var(--bt-display);
+  font-style: italic;
+  font-size: 20px;
+  color: var(--bt-cream);
+}
+
+.tier__price {
+  font-family: var(--bt-display);
+  font-size: 20px;
+  color: var(--bt-gold-bright);
+  white-space: nowrap;
+}
+
+.tier__price span {
+  font-family: var(--bt-ui);
+  font-size: 11.5px;
+  color: var(--bt-cream-dim);
+  letter-spacing: 0.04em;
+}
+
+.tier__list {
+  margin-top: 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tier__li {
+  display: flex;
+  gap: 10px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--bt-cream-soft);
+}
+
+.tier__li::before {
+  content: '·';
+  color: var(--bt-gold);
+  font-size: 18px;
+  line-height: 1.05;
+  flex: none;
+}
+
+.terms {
+  margin-top: 16px;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--bt-cream-dim);
+  text-align: center;
+}
+
+/* ------------------------------------------------------------
+   Detail screens
+   ------------------------------------------------------------ */
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 18px 0 4px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bt-cream-dim);
+}
+
+.detail__title {
+  margin-top: 10px;
+  font-family: var(--bt-display);
+  font-style: italic;
+  font-size: 32px;
+  line-height: 1.14;
+  color: var(--bt-cream);
+}
+
+.detail__blurb {
+  margin-top: 14px;
+  font-size: 14.5px;
+  line-height: 1.68;
+  color: var(--bt-cream-soft);
+}
+
+.session {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: var(--bt-r-sm);
+  background: var(--bt-surface);
+  border: 1px solid var(--bt-veil);
+  width: 100%;
+  text-align: left;
+}
+
+.session--done {
+  opacity: 0.62;
+}
+
+.session__n {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--bt-veil-strong);
+  color: var(--bt-cream-dim);
+}
+
+.session__n--done {
+  background: var(--bt-gold-wash);
+  border-color: rgba(201, 160, 92, 0.45);
+  color: var(--bt-gold-bright);
+}
+
+.session__t {
+  font-size: 15px;
+  color: var(--bt-cream);
+  line-height: 1.35;
+}
+
+.session__m {
+  margin-top: 3px;
+  font-size: 12px;
+  color: var(--bt-cream-dim);
+}
+
+.empty {
+  margin-top: 24px;
+  padding: 26px 20px;
+  border-radius: var(--bt-r);
+  border: 1px dashed var(--bt-veil-strong);
+  text-align: center;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--bt-cream-dim);
+}
+
+/* demo watermark, so nobody mistakes the prototype for a shipped build */
+.demo-note {
+  margin-top: 26px;
+  font-size: 11px;
+  line-height: 1.65;
+  color: rgba(169, 142, 160, 0.75);
+  text-align: center;
+  letter-spacing: 0.02em;
+}

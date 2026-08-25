@@ -1,0 +1,19 @@
+{
+  "name": "Body Temple",
+  "short_name": "body temple",
+  "description": "Daily sacred practice with Adriana Rizzolo. Devotional movement, breath and ritual, honouring the cycle.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#150A13",
+  "theme_color": "#1B0C18",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

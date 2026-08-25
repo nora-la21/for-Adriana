@@ -1,0 +1,56 @@
+/* ============================================================
+   Body Temple — design tokens
+   Deep eggplant + gold. Devotional register, not wellness-clinical.
+   ============================================================ */
+
+:root {
+  /* --- Ground: layered eggplant, darkest at the base --- */
+  --bt-ink: #150A13;          /* deepest, behind everything */
+  --bt-ground: #1B0C18;       /* app background */
+  --bt-ground-2: #24101F;     /* raised ground / sheets */
+  --bt-surface: #33162D;      /* cards, tiles */
+  --bt-surface-2: #3D1B36;    /* hovered / active cards */
+  --bt-veil: rgba(244, 231, 214, 0.08);  /* hairline borders */
+  --bt-veil-strong: rgba(244, 231, 214, 0.16);
+
+  /* --- Gold: the sacred accent. Used sparingly, never as fill-everything --- */
+  --bt-gold: #C9A05C;
+  --bt-gold-bright: #E0C089;
+  --bt-gold-dim: #9C7A45;
+  --bt-gold-wash: rgba(201, 160, 92, 0.14);
+
+  /* --- Light: warm cream, never pure white --- */
+  --bt-cream: #F4E7D6;
+  --bt-cream-soft: #DCC9BC;
+  --bt-cream-dim: #A98EA0;    /* muted, plum-leaning */
+
+  /* --- Moon: cool silver, distinct from gold so cycle reads as its own rail --- */
+  --bt-moon: #C4C8E0;
+  --bt-moon-dim: #8A8FA8;
+
+  /* --- Signal --- */
+  --bt-live: #E0736A;         /* live gathering / in-session */
+
+  /* --- Type --- */
+  --bt-display: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
+  --bt-ui: 'Jost', 'Avenir Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* --- Rhythm --- */
+  --bt-r-sm: 12px;
+  --bt-r: 18px;
+  --bt-r-lg: 24px;
+  --bt-r-pill: 999px;
+
+  --bt-pad: 20px;             /* the app's side gutter */
+  --bt-nav-h: 64px;
+
+  /* --- Depth --- */
+  --bt-shadow: 0 10px 30px rgba(0, 0, 0, 0.42);
+  --bt-shadow-lift: 0 18px 48px rgba(0, 0, 0, 0.55);
+
+  --bt-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* The app commits to one look — a temple at night. No light mode:
+   the register is the product. Declared explicitly so the host's
+   theme never bleeds through. */
